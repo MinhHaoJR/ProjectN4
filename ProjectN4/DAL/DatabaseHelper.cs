@@ -8,7 +8,7 @@ namespace ProjectN4.DAL
     public class DatabaseHelper
     {
         // Tạo chuỗi kết nối từ thông tin bên file DbSettings
-        public static string ConnectionString = $"Data Source={DbSettings.ServerIP},1433;Initial Catalog={DbSettings.DatabaseName};User ID={DbSettings.UserID};Password={DbSettings.Password};Network Library=DBMSSOCN;";
+        public static string ConnectionString = $"Data Source={DbSettings.ServerIP},1433;Initial Catalog={DbSettings.DatabaseName};User ID={DbSettings.UserID};Password={DbSettings.Password};Network Library=DBMSSOCN;TrustServerCertificate=True;";
 
         // Hàm lấy kết nối
         public static SqlConnection GetConnection()

@@ -10,13 +10,13 @@ namespace ProjectN4.DAL
     {
         public static string ServerIP = "100.65.72.80";
 
-        // 2. Tên Database (Theo file SQL)
+        // 2. Tên Database
         public static string DatabaseName = "QuanLyChuoiKS_NH";
 
-        // 3. Tài khoản SQL (Hỏi bạn của bạn)
+        // 3. Tài khoản SQL
         public static string UserID = "SQLKhachSan";
 
-        // 4. Mật khẩu SQL (Hỏi bạn của bạn)
+        // 4. Mật khẩu SQL
         public static string Password = "123456";
     }
 

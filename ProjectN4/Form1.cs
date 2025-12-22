@@ -16,5 +16,18 @@ namespace ProjectN4
         {
             InitializeComponent();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            // Gọi hàm Test từ lớp DAL
+            if (ProjectN4.DAL.DatabaseHelper.TestConnection())
+            {
+                MessageBox.Show("Thành công! Đã kết nối tới SQL qua Tailscale.", "Thông báo");
+            }
+            else
+            {
+                MessageBox.Show("Thất bại. Kiểm tra lại IP, User, Pass hoặc Tường lửa máy kia.", "Lỗi");
+            }
+        }
     }
 }
