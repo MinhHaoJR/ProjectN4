@@ -29,5 +29,35 @@ namespace ProjectN4
                 MessageBox.Show("Thất bại. Kiểm tra lại IP, User, Pass hoặc Tường lửa máy kia.", "Lỗi");
             }
         }
+
+        private void DangNhapHeThong_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void TenDangNhap_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void MatKhau_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void NhapTenDangNhap_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void NhapMatKhau_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void DangNhap_Click_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }
