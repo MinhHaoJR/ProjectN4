@@ -15,4 +15,11 @@
             NhanVienHienTai = null;
         }
     }
+    namespace ProjectN4
+    {
+        public static class Session
+        {
+            public static DTO.NhanVienDTO NhanVienHienTai { get; set; }
+        }
+    }
 }
