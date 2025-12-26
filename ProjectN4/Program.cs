@@ -1,8 +1,5 @@
 ﻿using ProjectN4.GUI;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ProjectN4
@@ -17,11 +14,15 @@ namespace ProjectN4
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-<<<<<<< HEAD
-            Application.Run(new frmQuanLyPhong());
-=======
-            Application.Run(new FormDangNhap());
->>>>>>> b7509e79ad521cf0c39b4e7fbc815720fd257609
+
+            // CHỌN 1 TRONG 2 DÒNG DƯỚI ĐÂY ĐỂ CHẠY:
+
+            // Cách 1: Chạy thẳng vào Form Quản Lý Phòng (Để bạn test code nãy giờ)
+            //Application.Run(new frmQuanLyPhong());
+            //Application.Run(new frmDichVu());
+            // Cách 2: Chạy từ màn hình Đăng Nhập (Dùng khi nào làm xong hết ứng dụng)
+            //Application.Run(new FormDangNhap()); 
+            Application.Run(new frmThemDichVu(1)); // Pass a valid maDatPhong value here
         }
     }
 }

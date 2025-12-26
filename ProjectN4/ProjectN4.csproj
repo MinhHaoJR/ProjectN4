@@ -165,14 +165,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <Compile Include="BUS\PhongBUS.cs" />
-    <Compile Include="DAL\DatabaseHelper.cs" />
-    <Compile Include="DAL\DbSettings.cs" />
     <Compile Include="DAL\PhongDAL.cs" />
     <Compile Include="DTO\PhongDTO.cs" />
-    <Compile Include="Form1.cs">
-=======
     <Compile Include="BUS\NhanVienBUS.cs" />
     <Compile Include="DAL\NhanVienDAL.cs" />
     <Compile Include="DAL\DatabaseHelper.cs" />
@@ -180,7 +175,6 @@
     <Compile Include="DTO\Session.cs" />
     <Compile Include="DTO\NhanVienDTO.cs" />
     <Compile Include="FormDangNhap.cs">
->>>>>>> b7509e79ad521cf0c39b4e7fbc815720fd257609
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormDangNhap.Designer.cs">
@@ -192,6 +186,12 @@
     <Compile Include="frmQuanLyPhong.Designer.cs">
       <DependentUpon>frmQuanLyPhong.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmThemDichVu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmThemDichVu.Designer.cs">
+      <DependentUpon>frmThemDichVu.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FormDangNhap.resx">
@@ -199,6 +199,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmQuanLyPhong.resx">
       <DependentUpon>frmQuanLyPhong.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmThemDichVu.resx">
+      <DependentUpon>frmThemDichVu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
