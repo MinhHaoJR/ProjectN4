@@ -144,47 +144,47 @@ namespace ProjectN4.GUI
         {
             try
             {
-                // 1. Lấy các giá trị đầu vào
+                // 1. Lấy giá trị cơ bản
                 decimal tPhong = ParseTienTe(txtTienPhong.Text);
                 decimal tDV = ParseTienTe(txtTienDichVu.Text);
                 decimal tCoc = ParseTienTe(txtDaCoc.Text);
 
-                // 2. TÍNH THÀNH TIỀN GỐC (Đây là cái bạn vừa hỏi nè)
-                // Công thức: (Tiền Phòng + Dịch Vụ) - Đã Cọc
-                decimal thanhTienGoc = (tPhong + tDV) - tCoc;
+                // Tổng cơ bản (Chưa có phụ thu/giảm giá)
+                decimal tongCoBan = tPhong + tDV;
 
-                // Nếu âm thì về 0
-                if (thanhTienGoc < 0) thanhTienGoc = 0;
-
-                // Hiển thị ra màn hình
-                txtThanhTienGoc.Text = thanhTienGoc.ToString("N0");
-
-                // 3. Xử lý Phần trăm Điều chỉnh
+                // 2. Xử lý Phần trăm Điều chỉnh
                 decimal phanTram = 0;
-                decimal.TryParse(txtGiaTri.Text, out phanTram);
+                decimal.TryParse(txtGiaTri.Text, out phanTram); // Lấy số từ ô nhập (ví dụ: 10)
 
-                // Tính tiền biến động dựa trên Gốc
-                decimal tienBienDong = thanhTienGoc * (phanTram / 100);
+                // Tính ra số tiền biến động (ví dụ: 500k * 10% = 50k)
+                decimal tienBienDong = tongCoBan * (phanTram / 100);
 
-                // 4. Cộng hoặc Trừ tùy theo ComboBox
-                if (cboLoaiDieuChinh.SelectedIndex == 0) // Phụ thu (+)
+                // 3. Kiểm tra ComboBox để Cộng hay Trừ
+                // Giả sử: Index 0 là "Phụ thu (+)", Index 1 là "Giảm giá (-)"
+                if (cboLoaiDieuChinh.SelectedIndex == 0)
                 {
-                    _thucThu = thanhTienGoc + tienBienDong;
-                    _tongGiaTriSuDung = (tPhong + tDV) + tienBienDong;
-                    _tienGiamGiaDB = 0;
+                    // Trường hợp PHỤ THU
+                    _tongGiaTriSuDung = tongCoBan + tienBienDong;
+                    _tienGiamGiaDB = 0; // Không có giảm giá
                 }
-                else // Giảm giá (-)
+                else
                 {
-                    _thucThu = thanhTienGoc - tienBienDong;
-                    _tongGiaTriSuDung = (tPhong + tDV);
-                    _tienGiamGiaDB = tienBienDong;
+                    // Trường hợp GIẢM GIÁ
+                    _tongGiaTriSuDung = tongCoBan - tienBienDong;
+                    _tienGiamGiaDB = tienBienDong; // Lưu số tiền giảm để ghi vào DB
                 }
 
-                // 5. Kết quả cuối cùng
+                // 4. Tính Thực Thu (Tiền khách cần trả nốt)
+                _thucThu = _tongGiaTriSuDung - tCoc;
+
+                // Hiển thị kết quả
+                // lblTongTien nên hiển thị số tiền CẦN TRẢ (Thực thu) hoặc Tổng giá trị tùy ý bạn. 
+                // Ở đây tôi để hiển thị số tiền khách Cần Trả Cuối Cùng.
                 lblTongTien.Text = _thucThu.ToString("N0") + " VNĐ";
             }
             catch
             {
+                // Bỏ qua lỗi khi đang gõ dở dang
             }
         }
 
