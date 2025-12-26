@@ -17,11 +17,14 @@ namespace ProjectN4
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-<<<<<<< HEAD
+
+            // CHỌN 1 TRONG 2 DÒNG DƯỚI ĐÂY ĐỂ CHẠY:
+
+            // Cách 1: Chạy thẳng vào Form Quản Lý Phòng (Để bạn test code nãy giờ)
             Application.Run(new frmQuanLyPhong());
-=======
-            Application.Run(new FormDangNhap());
->>>>>>> b7509e79ad521cf0c39b4e7fbc815720fd257609
+
+            // Cách 2: Chạy từ màn hình Đăng Nhập (Dùng khi nào làm xong hết ứng dụng)
+            //Application.Run(new FrmTraPhong());
         }
     }
 }
