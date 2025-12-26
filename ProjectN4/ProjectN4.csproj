@@ -192,12 +192,6 @@
     <Compile Include="frmCheckIn.Designer.cs">
       <DependentUpon>frmCheckIn.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmLichSuHoaDon.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmLichSuHoaDon.Designer.cs">
-      <DependentUpon>frmLichSuHoaDon.cs</DependentUpon>
-    </Compile>
     <Compile Include="frmQuanLyPhong.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -211,9 +205,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmCheckIn.resx">
       <DependentUpon>frmCheckIn.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmLichSuHoaDon.resx">
-      <DependentUpon>frmLichSuHoaDon.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmQuanLyPhong.resx">
       <DependentUpon>frmQuanLyPhong.cs</DependentUpon>
