@@ -198,6 +198,12 @@
     <Compile Include="frmQuanLyPhong.Designer.cs">
       <DependentUpon>frmQuanLyPhong.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmThemDichVu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmThemDichVu.Designer.cs">
+      <DependentUpon>frmThemDichVu.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FormDangNhap.resx">
@@ -206,8 +212,14 @@
     <EmbeddedResource Include="frmCheckIn.resx">
       <DependentUpon>frmCheckIn.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmLichSuHoaDon.resx">
+      <DependentUpon>frmLichSuHoaDon.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmQuanLyPhong.resx">
       <DependentUpon>frmQuanLyPhong.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmThemDichVu.resx">
+      <DependentUpon>frmThemDichVu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
