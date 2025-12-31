@@ -261,6 +261,7 @@
             this.Name = "frmThemDichVu";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Thêm Dịch Vụ Phòng";
+            this.Load += new System.EventHandler(this.frmThemDichVu_Load_1);
             ((System.ComponentModel.ISupportInitialize)(this.numSoLuong)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDichVuDaDung)).EndInit();
             this.ResumeLayout(false);

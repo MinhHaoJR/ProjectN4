@@ -14,11 +14,8 @@ namespace ProjectN4
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-<<<<<<< HEAD
             Application.Run(new frmQuanLyPhong());
-=======
-            Application.Run(new FormDangNhap());
->>>>>>> b7509e79ad521cf0c39b4e7fbc815720fd257609
+            //Application.Run(new FormDangNhap());
         }
     }
 }

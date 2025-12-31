@@ -37,6 +37,11 @@
             this.label1 = new System.Windows.Forms.Label();
             this.lblTenPhong = new System.Windows.Forms.Label();
             this.grpThanhToan = new System.Windows.Forms.GroupBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.txtGiaTri = new System.Windows.Forms.TextBox();
+            this.cboLoaiDieuChinh = new System.Windows.Forms.ComboBox();
+            this.txtThanhTienGoc = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.txtDaCoc = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.txtTienDichVu = new System.Windows.Forms.TextBox();
@@ -49,11 +54,6 @@
             this.cboHinhThuc = new System.Windows.Forms.ComboBox();
             this.btnThoat = new System.Windows.Forms.Button();
             this.btnThanhToan = new System.Windows.Forms.Button();
-            this.label11 = new System.Windows.Forms.Label();
-            this.txtThanhTienGoc = new System.Windows.Forms.TextBox();
-            this.cboLoaiDieuChinh = new System.Windows.Forms.ComboBox();
-            this.txtGiaTri = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
             this.grpThongTin.SuspendLayout();
             this.grpThanhToan.SuspendLayout();
             this.SuspendLayout();
@@ -74,6 +74,7 @@
             this.grpThongTin.TabIndex = 0;
             this.grpThongTin.TabStop = false;
             this.grpThongTin.Text = "Thông tin phòng";
+            this.grpThongTin.Enter += new System.EventHandler(this.grpThongTin_Enter);
             // 
             // lblNgayRa
             // 
@@ -166,6 +167,58 @@
             this.grpThanhToan.TabStop = false;
             this.grpThanhToan.Text = "Chi tiết tiền";
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.BackColor = System.Drawing.Color.White;
+            this.label7.Location = new System.Drawing.Point(411, 193);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(19, 16);
+            this.label7.TabIndex = 13;
+            this.label7.Text = "%";
+            // 
+            // txtGiaTri
+            // 
+            this.txtGiaTri.Location = new System.Drawing.Point(180, 190);
+            this.txtGiaTri.Name = "txtGiaTri";
+            this.txtGiaTri.Size = new System.Drawing.Size(250, 22);
+            this.txtGiaTri.TabIndex = 12;
+            this.txtGiaTri.TextChanged += new System.EventHandler(this.txtGiaTri_TextChanged);
+            // 
+            // cboLoaiDieuChinh
+            // 
+            this.cboLoaiDieuChinh.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboLoaiDieuChinh.FormattingEnabled = true;
+            this.cboLoaiDieuChinh.Items.AddRange(new object[] {
+            "Phụ thu (+)",
+            "Giảm giá (-)"});
+            this.cboLoaiDieuChinh.Location = new System.Drawing.Point(24, 189);
+            this.cboLoaiDieuChinh.Name = "cboLoaiDieuChinh";
+            this.cboLoaiDieuChinh.Size = new System.Drawing.Size(121, 24);
+            this.cboLoaiDieuChinh.TabIndex = 11;
+            // 
+            // txtThanhTienGoc
+            // 
+            this.txtThanhTienGoc.ForeColor = System.Drawing.Color.Red;
+            this.txtThanhTienGoc.Location = new System.Drawing.Point(180, 150);
+            this.txtThanhTienGoc.Name = "txtThanhTienGoc";
+            this.txtThanhTienGoc.ReadOnly = true;
+            this.txtThanhTienGoc.ShortcutsEnabled = false;
+            this.txtThanhTienGoc.Size = new System.Drawing.Size(250, 22);
+            this.txtThanhTienGoc.TabIndex = 10;
+            this.txtThanhTienGoc.Text = "0";
+            this.txtThanhTienGoc.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.label11.Location = new System.Drawing.Point(22, 150);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(133, 20);
+            this.label11.TabIndex = 9;
+            this.label11.Text = "Thành Tiền Gốc:";
+            // 
             // txtDaCoc
             // 
             this.txtDaCoc.ForeColor = System.Drawing.Color.Red;
@@ -251,6 +304,7 @@
             this.lblTongTien.TabIndex = 3;
             this.lblTongTien.Text = "5.000.000 VNĐ";
             this.lblTongTien.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lblTongTien.Click += new System.EventHandler(this.lblTongTien_Click);
             // 
             // label9
             // 
@@ -298,57 +352,6 @@
             this.btnThanhToan.Text = "XÁC NHẬN";
             this.btnThanhToan.UseVisualStyleBackColor = false;
             this.btnThanhToan.Click += new System.EventHandler(this.btnThanhToan_Click);
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label11.Location = new System.Drawing.Point(22, 150);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(133, 20);
-            this.label11.TabIndex = 9;
-            this.label11.Text = "Thành Tiền Gốc:";
-            // 
-            // txtThanhTienGoc
-            // 
-            this.txtThanhTienGoc.ForeColor = System.Drawing.Color.Red;
-            this.txtThanhTienGoc.Location = new System.Drawing.Point(180, 150);
-            this.txtThanhTienGoc.Name = "txtThanhTienGoc";
-            this.txtThanhTienGoc.ReadOnly = true;
-            this.txtThanhTienGoc.ShortcutsEnabled = false;
-            this.txtThanhTienGoc.Size = new System.Drawing.Size(250, 22);
-            this.txtThanhTienGoc.TabIndex = 10;
-            this.txtThanhTienGoc.Text = "0";
-            this.txtThanhTienGoc.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // cboLoaiDieuChinh
-            // 
-            this.cboLoaiDieuChinh.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboLoaiDieuChinh.FormattingEnabled = true;
-            this.cboLoaiDieuChinh.Items.AddRange(new object[] {
-            "Phụ thu (+)",
-            "Giảm giá (-)"});
-            this.cboLoaiDieuChinh.Location = new System.Drawing.Point(24, 189);
-            this.cboLoaiDieuChinh.Name = "cboLoaiDieuChinh";
-            this.cboLoaiDieuChinh.Size = new System.Drawing.Size(121, 24);
-            this.cboLoaiDieuChinh.TabIndex = 11;
-            // 
-            // txtGiaTri
-            // 
-            this.txtGiaTri.Location = new System.Drawing.Point(180, 190);
-            this.txtGiaTri.Name = "txtGiaTri";
-            this.txtGiaTri.Size = new System.Drawing.Size(250, 22);
-            this.txtGiaTri.TabIndex = 12;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.BackColor = System.Drawing.Color.White;
-            this.label7.Location = new System.Drawing.Point(411, 193);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(19, 16);
-            this.label7.TabIndex = 13;
-            this.label7.Text = "%";
             // 
             // frmCheckOut
             // 
