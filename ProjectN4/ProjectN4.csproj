@@ -194,8 +194,6 @@
     <Compile Include="frmCheckIn.Designer.cs">
       <DependentUpon>frmCheckIn.cs</DependentUpon>
     </Compile>
-<<<<<<< HEAD
-<<<<<<< HEAD
     <Compile Include="frmCheckOut.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -226,10 +224,6 @@
     <Compile Include="frmQuanLyNhanVien.Designer.cs">
       <DependentUpon>frmQuanLyNhanVien.cs</DependentUpon>
     </Compile>
-=======
->>>>>>> 340c59e70acdf4c9886f0f9c571ef7f2cd1b687f
-=======
->>>>>>> 340c59e70acdf4c9886f0f9c571ef7f2cd1b687f
     <Compile Include="frmQuanLyPhong.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -242,7 +236,6 @@
     <Compile Include="frmThemDichVu.Designer.cs">
       <DependentUpon>frmThemDichVu.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\frmMain.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FormDangNhap.resx">
@@ -250,6 +243,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmCheckIn.resx">
       <DependentUpon>frmCheckIn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCheckOut.resx">
+        <DependentUpon>frmCheckOut.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmLichSuHoaDon.resx">
       <DependentUpon>frmLichSuHoaDon.cs</DependentUpon>
