@@ -1,17 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System;
 
-namespace ProjectN4.DTO // Thay ProjectN4 bằng tên Project của nhóm
+namespace ProjectN4.DTO
 {
     public class NhanVienDTO
     {
         public int MaNV { get; set; }
         public int MaChiNhanh { get; set; }
         public string HoTen { get; set; }
+
+        // 👇 Đã thêm 2 dòng này cho khớp với SQL 
+        public DateTime NgaySinh { get; set; }
+        public string SDT { get; set; }
+
         public string TenDangNhap { get; set; }
         public string MatKhau { get; set; }
         public string ChucVu { get; set; }

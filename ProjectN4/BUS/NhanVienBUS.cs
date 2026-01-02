@@ -26,7 +26,7 @@ namespace ProjectN4.BUS
 
             // 2. GỌI LỚP DAL
             // Nếu dữ liệu nhập vào đã đầy đủ, BUS sẽ chuyển thông tin xuống DAL để tra cứu SQL
-            return dal.KiemTraDangNhap(user, pass);
+            return dal.DangNhap(user, pass);
         }
     }
 }

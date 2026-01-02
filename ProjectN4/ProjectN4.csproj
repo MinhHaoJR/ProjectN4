@@ -172,7 +172,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BUS\PhongBUS.cs" />
+    <Compile Include="DAL\KhachHangDAL.cs" />
     <Compile Include="DAL\PhongDAL.cs" />
+    <Compile Include="DTO\KhachHangDTO.cs" />
     <Compile Include="DTO\PhongDTO.cs" />
     <Compile Include="BUS\NhanVienBUS.cs" />
     <Compile Include="DAL\NhanVienDAL.cs" />
@@ -192,6 +194,8 @@
     <Compile Include="frmCheckIn.Designer.cs">
       <DependentUpon>frmCheckIn.cs</DependentUpon>
     </Compile>
+<<<<<<< HEAD
+<<<<<<< HEAD
     <Compile Include="frmCheckOut.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -204,6 +208,28 @@
     <Compile Include="frmLichSuHoaDon.Designer.cs">
       <DependentUpon>frmLichSuHoaDon.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMain.Designer.cs">
+      <DependentUpon>frmMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmQuanLyKhachHang.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmQuanLyKhachHang.Designer.cs">
+      <DependentUpon>frmQuanLyKhachHang.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmQuanLyNhanVien.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmQuanLyNhanVien.Designer.cs">
+      <DependentUpon>frmQuanLyNhanVien.cs</DependentUpon>
+    </Compile>
+=======
+>>>>>>> 340c59e70acdf4c9886f0f9c571ef7f2cd1b687f
+=======
+>>>>>>> 340c59e70acdf4c9886f0f9c571ef7f2cd1b687f
     <Compile Include="frmQuanLyPhong.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -216,6 +242,7 @@
     <Compile Include="frmThemDichVu.Designer.cs">
       <DependentUpon>frmThemDichVu.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\frmMain.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FormDangNhap.resx">
@@ -224,11 +251,17 @@
     <EmbeddedResource Include="frmCheckIn.resx">
       <DependentUpon>frmCheckIn.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmCheckOut.resx">
-      <DependentUpon>frmCheckOut.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="frmLichSuHoaDon.resx">
       <DependentUpon>frmLichSuHoaDon.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMain.resx">
+      <DependentUpon>frmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmQuanLyKhachHang.resx">
+      <DependentUpon>frmQuanLyKhachHang.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmQuanLyNhanVien.resx">
+      <DependentUpon>frmQuanLyNhanVien.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmQuanLyPhong.resx">
       <DependentUpon>frmQuanLyPhong.cs</DependentUpon>
@@ -244,6 +277,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -261,6 +295,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="download.ico" />
+    <None Include="Resources\download.png" />
+    <None Include="Resources\icons8-logout-32.png" />
+    <None Include="Resources\icons8-manager-32.png" />
+    <None Include="Resources\icons8-user-32.png" />
+    <None Include="Resources\icons8-bill-32.png" />
+    <None Include="Resources\icons8-hotel-32.png" />
+    <None Include="Resources\icons8-hotel-key-32.png" />
+    <None Include="Resources\icons8-home-32 %281%29.png" />
+    <None Include="Resources\icons8-home-32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Data.SqlClient.SNI.6.0.2\build\net462\Microsoft.Data.SqlClient.SNI.targets" Condition="Exists('..\packages\Microsoft.Data.SqlClient.SNI.6.0.2\build\net462\Microsoft.Data.SqlClient.SNI.targets')" />

@@ -1,239 +1,204 @@
 ﻿using ProjectN4.BUS;
+using ProjectN4.DAL;
 using ProjectN4.DTO;
+using ProjectN4.GUI;
+using System.Data.SqlClient;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ProjectN4
 {
     public partial class FormDangNhap : Form
     {
+        // Biến kiểm soát việc tự động đăng nhập (để tránh vòng lặp khi Đăng xuất)
+        // Bên frmMain sẽ gọi: FormDangNhap.AllowAutoLogin = false; khi bấm Đăng xuất
+        public static bool AllowAutoLogin = true;
+
         public FormDangNhap()
         {
             InitializeComponent();
+            this.KeyPreview = true; // Để bắt phím Enter/Esc
 
-            // Bật nhận sự kiện phím
-            this.KeyPreview = true;
-
-            // Focus vào ô tài khoản khi mở form
+            // Gán sự kiện Load (Phòng trường hợp bên Designer quên gán)
             this.Load += Form1_Load;
         }
 
-        // Sự kiện khi Form Load
+        // =======================================================================
+        // 1. SỰ KỆN FORM LOAD: XỬ LÝ TỰ ĐỘNG ĐĂNG NHẬP
+        // =======================================================================
         private void Form1_Load(object sender, EventArgs e)
         {
             try
             {
-                // Kiểm tra có tài khoản đã lưu không
+                // Kiểm tra xem người dùng có chọn "Ghi nhớ" không
                 if (Properties.Settings.Default.RememberMe)
                 {
-                    // Load tài khoản đã lưu
-                    textBox1.Text = Properties.Settings.Default.SavedUsername;
+                    // Lấy User và Pass đã lưu
+                    string savedUser = Properties.Settings.Default.SavedUsername;
+                    string savedPass = Properties.Settings.Default.SavedPassword; // Cần tạo trong Settings
+
+                    // Điền vào ô nhập liệu
+                    textBox1.Text = savedUser;
+                    textBox2.Text = savedPass;
                     checkBox1.Checked = true;
 
-                    // Focus vào ô mật khẩu (vì tài khoản đã có sẵn)
-                    textBox2.Focus();
+                    // 🔥 LOGIC AUTO LOGIN:
+                    // Nếu được phép Auto (Mới mở App) VÀ có dữ liệu -> Tự bấm đăng nhập
+                    if (AllowAutoLogin && !string.IsNullOrEmpty(savedUser) && !string.IsNullOrEmpty(savedPass))
+                    {
+                        // Gọi hàm đăng nhập ngay lập tức
+                        DangNhap_Click_1(sender, e);
+                    }
+                    else
+                    {
+                        // Nếu vừa Đăng xuất ra -> Không Auto -> Focus vào ô Pass để nhập lại
+                        textBox2.Focus();
+                    }
                 }
                 else
                 {
-                    // Focus vào textBox1 (tài khoản)
+                    // Nếu không nhớ -> Focus vào ô User
                     textBox1.Focus();
                 }
+
+                // Thiết lập thứ tự Tab (để bấm Tab chuyển ô cho mượt)
+                textBox1.TabIndex = 0;
+                textBox2.TabIndex = 1;
+                button1.TabIndex = 2;
+                checkBox1.TabIndex = 3;
             }
-            catch
+            catch (Exception ex)
             {
-                // Nếu lỗi Settings, focus bình thường
+                // Nếu lỗi Settings (do chưa cấu hình) thì lờ đi, để người dùng nhập tay
                 textBox1.Focus();
             }
-
-            // Thiết lập Tab Order
-            textBox1.TabIndex = 0;
-            textBox2.TabIndex = 1;
-            button1.TabIndex = 2;
-            checkBox1.TabIndex = 3;
-            checkBox2.TabIndex = 4;
         }
 
-        // HÀM KIỂM TRA DỮ LIỆU NHẬP
+        // =======================================================================
+        // 2. HÀM KIỂM TRA DỮ LIỆU ĐẦU VÀO
+        // =======================================================================
         private bool ValidateInput()
         {
-            // Kiểm tra tài khoản
             if (string.IsNullOrWhiteSpace(textBox1.Text))
             {
-                MessageBox.Show(
-                    "Vui lòng nhập tên đăng nhập!",
-                    "Thông báo",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
+                MessageBox.Show("Vui lòng nhập tên đăng nhập!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 textBox1.Focus();
                 return false;
             }
-
-            // Kiểm tra mật khẩu
             if (string.IsNullOrWhiteSpace(textBox2.Text))
             {
-                MessageBox.Show(
-                    "Vui lòng nhập mật khẩu!",
-                    "Thông báo",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
+                MessageBox.Show("Vui lòng nhập mật khẩu!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 textBox2.Focus();
                 return false;
             }
-
             return true;
         }
 
-        // SỰ KIỆN NÚT ĐĂNG NHẬP
+        // =======================================================================
+        // 3. SỰ KỆN NÚT ĐĂNG NHẬP (CHÍNH)
+        // =======================================================================
         private void DangNhap_Click_1(object sender, EventArgs e)
         {
-            // Bước 1: Kiểm tra validation
-            if (!ValidateInput())
-                return;
+            // Bước 1: Validate
+            if (!ValidateInput()) return;
 
-            // Bước 2: Lấy thông tin nhập vào
             string username = textBox1.Text.Trim();
             string password = textBox2.Text.Trim();
 
-            // Bước 3: Hiển thị loading
+            // Hiệu ứng Loading
             button1.Enabled = false;
             button1.Text = "Đang xử lý...";
             this.Cursor = Cursors.WaitCursor;
 
             try
             {
-                // Bước 4: Gọi BUS để xử lý đăng nhập
                 NhanVienBUS bus = new NhanVienBUS();
                 NhanVienDTO nhanVien = bus.DangNhap(username, password);
 
                 if (nhanVien != null)
                 {
                     // ✅ ĐĂNG NHẬP THÀNH CÔNG
-
-                    // Lưu thông tin vào Session
                     Session.NhanVienHienTai = nhanVien;
 
-                    // ═══════════════════════════════════════════════════
-                    // XỬ LÝ GHI NHỚ ĐĂNG NHẬP
-                    // ═══════════════════════════════════════════════════
+                    // --- XỬ LÝ LƯU SETTINGS (USER + PASS) ---
                     if (checkBox1.Checked)
                     {
-                        try
-                        {
-                            // Lưu tài khoản vào Settings
-                            Properties.Settings.Default.SavedUsername = username;
-                            Properties.Settings.Default.RememberMe = true;
-                            Properties.Settings.Default.Save();
-                        }
-                        catch
-                        {
-                            // Nếu lỗi Settings, bỏ qua (không ảnh hưởng đăng nhập)
-                        }
+                        Properties.Settings.Default.SavedUsername = username;
+                        Properties.Settings.Default.SavedPassword = password; // Lưu cả Pass
+                        Properties.Settings.Default.RememberMe = true;
+                        Properties.Settings.Default.Save(); // Lệnh ghi xuống ổ cứng
                     }
                     else
                     {
-                        try
-                        {
-                            // Xóa thông tin đã lưu
-                            Properties.Settings.Default.SavedUsername = "";
-                            Properties.Settings.Default.RememberMe = false;
-                            Properties.Settings.Default.Save();
-                        }
-                        catch
-                        {
-                            // Bỏ qua lỗi
-                        }
+                        // Nếu bỏ tích -> Xóa sạch
+                        Properties.Settings.Default.SavedUsername = "";
+                        Properties.Settings.Default.SavedPassword = "";
+                        Properties.Settings.Default.RememberMe = false;
+                        Properties.Settings.Default.Save();
                     }
 
-                    // Thông báo thành công
-                    MessageBox.Show(
-                        $"Đăng nhập thành công!\n\n" +
-                        $"Xin chào: {nhanVien.HoTen}\n" +
-                        $"Chức vụ: {nhanVien.ChucVu}",
-                        "Thành công",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information);
+                    // --- CHUYỂN SANG FORM MAIN ---
+                    this.Hide(); // Ẩn Login
 
-                    // Mở Form Main (nếu đã tạo)
-                    // FormMain mainForm = new FormMain();
-                    // mainForm.Show();
+                    frmMain f = new frmMain();
+                    f.ShowDialog(); // Chương trình dừng tại dòng này chờ Main đóng
 
-                    // Ẩn form đăng nhập
-                    this.Hide();
+                    // --- KHI FORM MAIN ĐÓNG (ĐĂNG XUẤT) ---
+                    // Code sẽ chạy tiếp xuống dưới đây
+                    this.Show(); // Hiện lại Login
+                    this.Cursor = Cursors.Default;
+                    button1.Enabled = true;
+                    button1.Text = "Đăng Nhập";
 
-                    // Hoặc đóng form nếu không cần dùng lại
-                    // this.Close();
+                    // Nếu không chọn ghi nhớ -> Xóa trắng ô Pass
+                    if (!checkBox1.Checked)
+                    {
+                        textBox2.Clear();
+                    }
+                    textBox2.Focus();
                 }
                 else
                 {
-                    // ❌ ĐĂNG NHẬP THẤT BẠI
-
-                    MessageBox.Show(
-                        "Tên đăng nhập hoặc mật khẩu không đúng!\n\nVui lòng kiểm tra lại.",
-                        "Lỗi đăng nhập",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-
-                    // Clear mật khẩu và focus lại
-                    textBox2.Clear();
-
-                    // Bỏ check "hiển thị mật khẩu" nếu đang bật
-                    checkBox2.Checked = false;
-
+                    MessageBox.Show("Tên đăng nhập hoặc mật khẩu không đúng!", "Lỗi đăng nhập", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     textBox2.Focus();
                 }
             }
             catch (Exception ex)
             {
-                // ⚠️ XỬ LÝ LỖI
-
-                MessageBox.Show(
-                    $"Lỗi kết nối cơ sở dữ liệu!\n\nChi tiết: {ex.Message}",
-                    "Lỗi",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                MessageBox.Show($"Lỗi kết nối: {ex.Message}", "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
-                // Khôi phục button
+                // Reset trạng thái nút bấm dù thành công hay thất bại
                 button1.Enabled = true;
                 button1.Text = "Đăng Nhập";
                 this.Cursor = Cursors.Default;
             }
         }
 
-        // XỬ LÝ PHÍM TẮT
+        // =======================================================================
+        // 4. XỬ LÝ PHÍM TẮT (ENTER, ESC)
+        // =======================================================================
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            // Nhấn Enter ở textBox1 → Chuyển sang textBox2
+            // Enter ở TextBox1 -> Nhảy sang TextBox2
             if (keyData == Keys.Enter && textBox1.Focused)
             {
                 textBox2.Focus();
                 return true;
             }
 
-            // Nhấn Enter ở textBox2 → Đăng nhập
+            // Enter ở TextBox2 -> Bấm Đăng nhập
             if (keyData == Keys.Enter && textBox2.Focused)
             {
                 DangNhap_Click_1(this, EventArgs.Empty);
                 return true;
             }
 
-            // Nhấn ESC → Thoát
+            // ESC -> Hỏi thoát
             if (keyData == Keys.Escape)
             {
-                DialogResult result = MessageBox.Show(
-                    "Bạn có chắc chắn muốn thoát chương trình?",
-                    "Xác nhận thoát",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question);
-
+                DialogResult result = MessageBox.Show("Bạn có muốn thoát chương trình?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
                     Application.Exit();
@@ -244,88 +209,58 @@ namespace ProjectN4
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
-        // SỰ KIỆN TEST KẾT NỐI (Nút cũ)
-        private void button1_Click(object sender, EventArgs e)
-        {
-            // Test kết nối database
-            if (ProjectN4.DAL.DatabaseHelper.TestConnection())
-            {
-                MessageBox.Show(
-                    "Thành công! Đã kết nối tới SQL qua Tailscale.",
-                    "Thông báo",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
-            }
-            else
-            {
-                MessageBox.Show(
-                    "Thất bại. Kiểm tra lại IP, User, Pass hoặc Tường lửa máy kia.",
-                    "Lỗi",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-            }
-        }
+        // =======================================================================
+        // 5. CÁC TIỆN ÍCH KHÁC (HIỆN PASS, FIX SQL)
+        // =======================================================================
 
-        // ═══════════════════════════════════════════════════════════
-        // CHECKBOX 1 - GHI NHỚ ĐĂNG NHẬP
-        // ═══════════════════════════════════════════════════════════
-        private void checkRememberMe_CheckedChanged(object sender, EventArgs e)
-        {
-            // Chỉ thông báo, không lưu ngay
-            // Sẽ lưu khi đăng nhập thành công
-
-            if (checkBox1.Checked)
-            {
-                // Tùy chọn: Hiển thị tooltip hoặc thông báo nhẹ
-                // MessageBox.Show("Tài khoản sẽ được lưu sau khi đăng nhập thành công", 
-                //     "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
-
-        // ═══════════════════════════════════════════════════════════
-        // CHECKBOX 2 - HIỂN THỊ MẬT KHẨU
-        // ═══════════════════════════════════════════════════════════
+        // Checkbox hiển thị mật khẩu
         private void checkPass_CheckedChanged(object sender, EventArgs e)
         {
             if (checkBox2.Checked)
             {
-                // HIỂN THỊ mật khẩu
-                textBox2.PasswordChar = '\0';
+                textBox2.PasswordChar = '\0'; // Hiện chữ
                 textBox2.UseSystemPasswordChar = false;
             }
             else
             {
-                // ẨN mật khẩu
-                textBox2.PasswordChar = '●';
+                textBox2.PasswordChar = '●'; // Hiện chấm tròn
                 textBox2.UseSystemPasswordChar = true;
             }
         }
 
-        // CÁC SỰ KIỆN KHÔNG CẦN THIẾT (Có thể xóa)
-        private void lbltille_Click(object sender, EventArgs e)
+        // Nút Fix lỗi dữ liệu SQL (Admin dùng khi lỗi khoảng trắng)
+        private void btnFixData_Click(object sender, EventArgs e)
         {
-            // Không cần xử lý
+            string chuoiketNoi = $"Data Source={DbSettings.ServerIP};Initial Catalog={DbSettings.DatabaseName};User ID={DbSettings.UserID};Password={DbSettings.Password};";
+
+            using (SqlConnection conn = new SqlConnection(chuoiketNoi))
+            {
+                try
+                {
+                    conn.Open();
+                    string sql = @"UPDATE NHAN_VIEN
+                                   SET TenDangNhap = RTRIM(LTRIM(TenDangNhap)),
+                                       MatKhau = RTRIM(LTRIM(MatKhau))
+                                   WHERE TenDangNhap LIKE 'admin%'";
+
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+                    int rows = cmd.ExecuteNonQuery();
+                    MessageBox.Show($"Đã chuẩn hóa {rows} dòng dữ liệu.", "Thành công");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi: " + ex.Message);
+                }
+            }
         }
 
-        private void TenDangNhap_Click(object sender, EventArgs e)
-        {
-            // Không cần xử lý
-        }
-
-        private void MatKhau_Click(object sender, EventArgs e)
-        {
-            // Không cần xử lý
-        }
-
-        private void NhapTenDangNhap_TextChanged(object sender, EventArgs e)
-        {
-            // Có thể thêm validation real-time ở đây nếu cần
-            // Ví dụ: Chỉ cho phép chữ cái và số
-        }
-
-        private void NhapMatKhau_TextChanged(object sender, EventArgs e)
-        {
-            // Có thể thêm kiểm tra độ mạnh mật khẩu ở đây nếu cần
-        }
+        // Các hàm sự kiện thừa (Nếu Designer lỡ tạo thì để trống, đừng xóa kẻo lỗi Designer)
+        private void checkRememberMe_CheckedChanged(object sender, EventArgs e) { }
+        private void lbltille_Click(object sender, EventArgs e) { }
+        private void TenDangNhap_Click(object sender, EventArgs e) { }
+        private void MatKhau_Click(object sender, EventArgs e) { }
+        private void NhapTenDangNhap_TextChanged(object sender, EventArgs e) { }
+        private void NhapMatKhau_TextChanged(object sender, EventArgs e) { }
+        private void button1_Click(object sender, EventArgs e) { }
     }
 }

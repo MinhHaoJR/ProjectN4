@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.lblTieuDe = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnXem = new System.Windows.Forms.Button();
@@ -43,6 +43,7 @@
             this.btnThoat = new System.Windows.Forms.Button();
             this.btnInAn = new System.Windows.Forms.Button();
             this.lblTongDoanhThu = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHoaDon)).BeginInit();
             this.panel1.SuspendLayout();
@@ -144,8 +145,8 @@
             // dgvHoaDon
             // 
             this.dgvHoaDon.AllowUserToAddRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.AliceBlue;
-            this.dgvHoaDon.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.AliceBlue;
+            this.dgvHoaDon.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvHoaDon.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvHoaDon.BackgroundColor = System.Drawing.Color.White;
             this.dgvHoaDon.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -163,6 +164,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.btnThoat);
             this.panel1.Controls.Add(this.btnInAn);
             this.panel1.Controls.Add(this.lblTongDoanhThu);
@@ -181,16 +183,18 @@
             this.btnThoat.TabIndex = 2;
             this.btnThoat.Text = "Thoát";
             this.btnThoat.UseVisualStyleBackColor = true;
+            this.btnThoat.Click += new System.EventHandler(this.btnThoat_Click);
             // 
             // btnInAn
             // 
             this.btnInAn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnInAn.Location = new System.Drawing.Point(745, 12);
+            this.btnInAn.Location = new System.Drawing.Point(754, 12);
             this.btnInAn.Name = "btnInAn";
             this.btnInAn.Size = new System.Drawing.Size(120, 35);
             this.btnInAn.TabIndex = 1;
             this.btnInAn.Text = "🖨 In Hóa Đơn";
             this.btnInAn.UseVisualStyleBackColor = true;
+            this.btnInAn.Click += new System.EventHandler(this.btnInHoaDon_Click);
             // 
             // lblTongDoanhThu
             // 
@@ -202,6 +206,17 @@
             this.lblTongDoanhThu.Size = new System.Drawing.Size(270, 28);
             this.lblTongDoanhThu.TabIndex = 0;
             this.lblTongDoanhThu.Text = "TỔNG DOANH THU: 0 VNĐ";
+            // 
+            // button1
+            // 
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button1.Location = new System.Drawing.Point(628, 12);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(120, 35);
+            this.button1.TabIndex = 3;
+            this.button1.Text = "Xuất Excel";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.btnXuatExcel_Click);
             // 
             // frmLichSuHoaDon
             // 
@@ -244,5 +259,6 @@
         private System.Windows.Forms.Label lblTongDoanhThu;
         private System.Windows.Forms.Button btnThoat;
         private System.Windows.Forms.Button btnInAn;
+        private System.Windows.Forms.Button button1;
     }
 }
